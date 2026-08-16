@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abyssal Devourer — Boss Fight</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="menu">
+    <h1>ABYSSAL DEVOURER</h1>
+    <p class="subtitle">Calamity-inspired multiplayer boss fight</p>
+
+    <div class="form">
+      <input type="text" id="playerName" placeholder="Твой ник" maxlength="16" value="Hunter" />
+      
+      <select id="classSelect">
+        <option value="berserker">Берсерк (Melee)</option>
+        <option value="ranger">Стрелок (Ranged)</option>
+        <option value="mage">Маг (Magic)</option>
+      </select>
+
+      <input type="text" id="roomId" placeholder="Код комнаты (или оставь пустым)" maxlength="12" />
+      
+      <button id="joinBtn">Войти в бой</button>
+    </div>
+
+    <p class="hint">Максимум 5 игроков • WASD / Стрелки • Пробел — прыжок</p>
+  </div>
+
+  <div id="game" class="hidden">
+    <canvas id="canvas"></canvas>
+
+    <div id="ui">
+      <div id="hpBar">
+        <div id="hpFill"></div>
+        <span id="hpText">100 / 100</span>
+      </div>
+
+      <div id="playersList"></div>
+
+      <div id="chat">
+        <div id="chatMessages"></div>
+        <input type="text" id="chatInput" placeholder="Написать в чат..." maxlength="120" />
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/network.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
