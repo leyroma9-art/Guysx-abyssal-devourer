@@ -1,4 +1,4 @@
-// main.js — главный цикл, ввод, камера
+// main.js — главный цикл, ввод, камера + мобильное управление
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -23,7 +23,7 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-// Управление
+// ===== Клавиатура =====
 window.addEventListener('keydown', (e) => {
   if (e.code === 'KeyA' || e.code === 'ArrowLeft') keys.left = true;
   if (e.code === 'KeyD' || e.code === 'ArrowRight') keys.right = true;
@@ -51,7 +51,54 @@ window.addEventListener('keyup', (e) => {
   if (e.code === 'Space' || e.code === 'KeyW' || e.code === 'ArrowUp') keys.jump = false;
 });
 
-// Кнопка входа
+// ===== Мобильное управление =====
+const mobileToggle = document.getElementById('mobileToggle');
+const mobileControls = document.getElementById('mobileControls');
+const btnLeft = document.getElementById('btnLeft');
+const btnRight = document.getElementById('btnRight');
+const btnJump = document.getElementById('btnJump');
+
+let mobileEnabled = false;
+
+mobileToggle.addEventListener('click', () => {
+  mobileEnabled = !mobileEnabled;
+  mobileToggle.classList.toggle('active', mobileEnabled);
+  mobileControls.classList.toggle('hidden', !mobileEnabled);
+});
+
+// Универсальная функция для touch/mouse
+function bindMobileButton(btn, keyName) {
+  const start = (e) => {
+    e.preventDefault();
+    keys[keyName] = true;
+    btn.classList.add('pressed');
+  };
+  const end = (e) => {
+    e.preventDefault();
+    keys[keyName] = false;
+    btn.classList.remove('pressed');
+  };
+
+  btn.addEventListener('touchstart', start, { passive: false });
+  btn.addEventListener('touchend', end, { passive: false });
+  btn.addEventListener('touchcancel', end, { passive: false });
+  btn.addEventListener('mousedown', start);
+  btn.addEventListener('mouseup', end);
+  btn.addEventListener('mouseleave', end);
+}
+
+bindMobileButton(btnLeft, 'left');
+bindMobileButton(btnRight, 'right');
+bindMobileButton(btnJump, 'jump');
+
+// Предотвращаем скролл страницы на мобилках во время игры
+document.addEventListener('touchmove', (e) => {
+  if (mobileEnabled && !e.target.closest('#chat')) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// ===== Кнопка входа =====
 document.getElementById('joinBtn').addEventListener('click', () => {
   const name = document.getElementById('playerName').value.trim() || 'Hunter';
   const classType = document.getElementById('classSelect').value;
@@ -60,7 +107,7 @@ document.getElementById('joinBtn').addEventListener('click', () => {
   joinRoom(name, classType, room);
 });
 
-// Игровой цикл
+// ===== Игровой цикл =====
 function gameLoop() {
   // Отправляем ввод на сервер
   if (myId) {
