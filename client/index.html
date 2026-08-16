@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Abyssal Devourer — Boss Fight</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -38,6 +38,20 @@
       </div>
 
       <div id="playersList"></div>
+
+      <!-- Кнопка переключения мобильного управления -->
+      <button id="mobileToggle" title="Включить управление для телефона">📱</button>
+
+      <!-- Экранные кнопки (появляются после включения) -->
+      <div id="mobileControls" class="hidden">
+        <div class="mobile-left">
+          <button id="btnLeft" class="mob-btn">◀</button>
+          <button id="btnRight" class="mob-btn">▶</button>
+        </div>
+        <div class="mobile-right">
+          <button id="btnJump" class="mob-btn jump">прыжок</button>
+        </div>
+      </div>
 
       <div id="chat">
         <div id="chatMessages"></div>
